@@ -7,6 +7,8 @@ import type {
 import { azureActiveDirectory } from './azureActiveDirectory'
 import type { Custom } from './custom'
 import { custom } from './custom'
+import type { Ethereum, EthereumUser } from './ethereum'
+import { ethereum } from './ethereum'
 import type { Firebase } from './firebase'
 import { firebase } from './firebase'
 import type { GoTrue, GoTrueUser } from './goTrue'
@@ -15,6 +17,8 @@ import type { MagicLink, MagicUser } from './magicLink'
 import { magicLink } from './magicLink'
 import type { NetlifyIdentity } from './netlify'
 import { netlify } from './netlify'
+import type { Nhost, NhostUser } from './nhost'
+import { nhost } from './nhost'
 import type { Supabase, SupabaseUser } from './supabase'
 import { supabase } from './supabase'
 
@@ -26,6 +30,8 @@ const typesToClients = {
   magicLink,
   firebase,
   supabase,
+  ethereum,
+  nhost,
   /** Don't we support your auth client? No problem, define your own the `custom` type! */
   custom,
 }
@@ -38,6 +44,8 @@ export type SupportedAuthClients =
   | MagicLink
   | Firebase
   | Supabase
+  | Ethereum
+  | Nhost
   | Custom
 
 export type SupportedAuthTypes = keyof typeof typesToClients
@@ -47,12 +55,16 @@ export type { AzureActiveDirectoryUser }
 export type { GoTrueUser }
 export type { MagicUser }
 export type { SupabaseUser }
+export type { EthereumUser }
+export type { NhostUser }
 export type SupportedUserMetadata =
   | Auth0User
   | AzureActiveDirectoryUser
   | GoTrueUser
   | MagicUser
   | SupabaseUser
+  | EthereumUser
+  | NhostUser
 
 export interface AuthClient {
   restoreAuthState?(): void | Promise<any>

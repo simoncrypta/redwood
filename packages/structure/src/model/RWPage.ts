@@ -4,7 +4,6 @@ import * as tsm from 'ts-morph'
 
 import { FileNode } from '../ide'
 import { lazy } from '../x/decorators'
-import { directoryNameResolver } from '../x/path'
 
 import { RWProject } from './RWProject'
 
@@ -17,12 +16,7 @@ export class RWPage extends FileNode {
     super()
   }
   @lazy() get filePath() {
-    const f = directoryNameResolver(this.path)
-    if (!f)
-      throw new Error(
-        `could not resolve index filename for directory '${this.path}' using dirname convention`
-      )
-    return f
+    return this.path
   }
   @lazy() get route() {
     return this.parent.router.routes.find(

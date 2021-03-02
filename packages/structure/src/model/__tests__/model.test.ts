@@ -11,7 +11,13 @@ describe('Redwood Project Model', () => {
 
     const pageNames = new Set(project.pages.map((p) => p.basenameNoExt))
     expect(pageNames).toEqual(
-      new Set(['FatalErrorPage', 'HomePage', 'NotFoundPage'])
+      new Set([
+        'FatalErrorPage',
+        'HomePage',
+        'NotFoundPage',
+        'TypeScriptPage',
+        'EditUserPage',
+      ])
     )
     for (const page of project.pages) {
       page.basenameNoExt //?
@@ -95,6 +101,32 @@ describe.skip('env vars', () => {
     env.env_defaults //?
     project.redwoodTOML.web_includeEnvironmentVariables //?
     env.process_env_expressions //?
+  })
+})
+
+describe('Redwood Route detection', () => {
+  it('detects routes with the prerender prop', async () => {
+    const projectRoot = getFixtureDir('example-todo-main')
+    const project = new RWProject({ projectRoot, host: new DefaultHost() })
+    const routes = project.getRouter().routes
+
+    const prerenderRoutes = routes
+      .filter((r) => r.prerender)
+      // Make it a little easier to read
+      .map(({ name, path }) => {
+        return { name, path }
+      })
+
+    expect(prerenderRoutes.length).toBe(3)
+    expect(prerenderRoutes).toContainEqual({ name: 'home', path: '/' })
+    expect(prerenderRoutes).toContainEqual({
+      name: 'typescriptPage',
+      path: '/typescript',
+    })
+    expect(prerenderRoutes).toContainEqual({
+      name: 'someOtherPage',
+      path: '/somewhereElse',
+    })
   })
 })
 

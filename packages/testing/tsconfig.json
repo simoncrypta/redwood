@@ -6,14 +6,16 @@
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
     "outDir": "dist",
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
     }
   },
   "include": [
     "src"
   ],
   "references": [
+    { "path": "../router" },
     { "path": "../internal" },
-    { "path": "../web" }
+    { "path": "../web" },
+    { "path": "../auth" },
   ]
 }
